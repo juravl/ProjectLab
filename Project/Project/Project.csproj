@@ -63,6 +63,12 @@
     <Compile Include="EditingData.Designer.cs">
       <DependentUpon>EditingData.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeСard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeeСard.Designer.cs">
+      <DependentUpon>EmployeeСard.cs</DependentUpon>
+    </Compile>
     <Compile Include="LaboratoryStaff.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditingData.resx">
       <DependentUpon>EditingData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeСard.resx">
+      <DependentUpon>EmployeeСard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LaboratoryStaff.resx">
       <DependentUpon>LaboratoryStaff.cs</DependentUpon>

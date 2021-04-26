@@ -14,19 +14,24 @@ namespace Project
 {
     public partial class AddStaff : Form
     {
+        //Создание пары ключ-атрибут
         private Dictionary<string, string> _famaliStatis = new Dictionary<string, string>();
         private Dictionary<string, string> _positionName = new Dictionary<string, string>();
         private Dictionary<string, string> _degreeName = new Dictionary<string, string>();
         public AddStaff()
         {
             InitializeComponent();
+            //Подключение к базе данных
             MySqlConnection connection = new MySqlConnection("server = localhost; port = 3306; username = root; password = root; database = project");
             DataBase dataBase = new DataBase();
+            //Класс представляет таблицу в памяти
             DataTable linkcat = new DataTable("linkcat");
             DataTable linkcat1 = new DataTable("linkcat1");
             DataTable linkcat2 = new DataTable("linkcat2");
+
             dataBase.openConnetion();
 
+            //Запрос на извлечение семейного положения из базы данных
             using (MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM marital_sratus", connection))
             {
                 da.Fill(linkcat);
@@ -37,6 +42,7 @@ namespace Project
                 id_marital_status.Items.Add(da[1].ToString());
             }
 
+            //Запрос на извлечение списка должностей из базы данных
             using (MySqlDataAdapter da1 = new MySqlDataAdapter("SELECT * FROM position", connection))
             {
                 da1.Fill(linkcat1);
@@ -47,6 +53,7 @@ namespace Project
                 id_position.Items.Add(da1[1].ToString());
             }
 
+            //Запрос на извлечение списка ученых степеней
             using (MySqlDataAdapter da2 = new MySqlDataAdapter("SELECT * FROM academic_degree", connection))
             {
                 da2.Fill(linkcat2);
@@ -61,28 +68,15 @@ namespace Project
 
         private void buttonBack_Click(object sender, EventArgs e)
         {
+            //Переход на форму списка сотрудников
             this.Hide();
             LaboratoryStaff labStaff = new LaboratoryStaff();
             labStaff.Show();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            //При нажатии на кнопку сохранение, происходит проверка на заполненность полей и на корректность
             if(family.Text=="")
             {
                 MessageBox.Show("Введите фамилию");
@@ -141,8 +135,11 @@ namespace Project
 
             DataBase dataBase = new DataBase();
 
-            MySqlCommand command = new MySqlCommand("INSERT INTO `employees` (`family`, `name`, `surname`, `gender`, `birthday`, `id_marital_status`, `having_child`, `id_position`, `id_academic_degree`) VALUES (@family, @name, @surname, @gender, @birthday, @id_marital_status, @having_child, @id_position, @id_academic_degree)", dataBase.getConnection());
+            //Запрос в базу данных о добавлении новго сотрудника
+            MySqlCommand command = new MySqlCommand("INSERT INTO `employees` (`family`, `name`, `surname`, `gender`, `birthday`, `id_marital_status`, `having_child`, `id_position`, `id_academic_degree`) " +
+                "VALUES (@family, @name, @surname, @gender, @birthday, @id_marital_status, @having_child, @id_position, @id_academic_degree)", dataBase.getConnection());
 
+            //Добавление данных с формы
             command.Parameters.Add("@family", MySqlDbType.VarChar).Value = family.Text;
             command.Parameters.Add("@name", MySqlDbType.VarChar).Value = name.Text;
             command.Parameters.Add("@surname", MySqlDbType.VarChar).Value = surname.Text;
@@ -151,6 +148,7 @@ namespace Project
             command.Parameters.Add("@id_position", MySqlDbType.Int32).Value = _positionName[id_position.SelectedItem.ToString()];
             command.Parameters.Add("@id_academic_degree", MySqlDbType.Int32).Value = _degreeName[id_academic_degree.SelectedItem.ToString()];
 
+            //Обработка вводимых данных
             if (gender.GetItemText(gender.SelectedItem) == "Мужской(M)")
             {
                 command.Parameters.Add("@gender", MySqlDbType.Text).Value = "M";
@@ -171,7 +169,7 @@ namespace Project
             }
 
             dataBase.openConnetion();
-
+        
            if (command.ExecuteNonQuery() == 1)
                 MessageBox.Show("Сотрудник успешно добавлен");
            else
@@ -179,6 +177,7 @@ namespace Project
 
             dataBase.closeConnetion();
 
+            //Очистка полей после добавления
             family.Clear();
             name.Clear();
             surname.Clear();
@@ -192,11 +191,6 @@ namespace Project
         }
 
         private void AddStaff_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void gender_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

@@ -48,3 +48,4 @@ C:\Users\User\Desktop\hello\Project\Project\obj\Debug\Project.pdb
 C:\Users\User\Desktop\hello\Project\Project\obj\Debug\Project.AddStaff.resources
 C:\Users\User\Desktop\hello\Project\Project\obj\Debug\Project.LaboratoryStaff.resources
 C:\Users\User\Desktop\hello\Project\Project\obj\Debug\Project.EditingData.resources
+C:\Users\User\Desktop\hello\Project\Project\obj\Debug\Project.EmployeeСard.resources
